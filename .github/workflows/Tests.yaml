@@ -1,0 +1,37 @@
+name: Tests Build
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+concurrency:
+  group: tests-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  Test:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Prepare Firefox
+        uses: browser-actions/setup-firefox@latest
+
+      - name: Install dependencies
+        run: pip install -r tests/requirements.txt
+      
+      - name: Run Unit tests
+        working-directory: tests
+        run: pytest unit/
+
+      - name: Run Integration tests
+        working-directory: tests
+        run: pytest integration/
