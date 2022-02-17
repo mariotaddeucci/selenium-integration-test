@@ -37,6 +37,6 @@ def test_unauthorized_create_customer_group():
     alert_message = find_visible_element(By.CSS_SELECTOR, ".alert-danger").text
 
     # Check if unauthorized alert is displayed
-    assert "not have permission" in alert_message, "Unauthorized alert is not displayed"
+    assert "invalid message" in alert_message, "Unauthorized alert is not displayed"
 
     driver.close()
