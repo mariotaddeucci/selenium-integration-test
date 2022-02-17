@@ -27,10 +27,6 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r tests/requirements.txt
-      
-      - name: Run Unit tests
-        working-directory: tests
-        run: pytest unit/
 
       - name: Run Integration tests
         working-directory: tests
